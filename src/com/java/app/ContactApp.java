@@ -1,13 +1,11 @@
-package com.java;
+package com.java.app;
 
 public class ContactApp {
 
 	public static void main(String[] args) {
-		int y =1;
-
+		// TODO Auto-generated method stub
 		
-		
-	
 	}
 
 }
+
