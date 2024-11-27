@@ -8,7 +8,6 @@ import com.java.dao.EmploymentDao;
 import com.java.dao.impl.EmploymentImpl;
 import com.java.vo.EmploymentVo;
 
-
 public class ContactApp {
 
 	public static void main(String[] args) {
