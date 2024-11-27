@@ -2,18 +2,26 @@ package com.java.vo;
 
 public class EmploymentVo {
 	private Long id;
+	private String name;
 	private String age;
 	private String email;
 	private String address;
 	private Long departmentId;
-	private String rank;
+	private String employeeRank;
 	private Long salary;
-	private String employeeNumber;
+	private String number;
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getAge() {
 		return age;
@@ -39,11 +47,11 @@ public class EmploymentVo {
 	public void setDepartmentId(Long departmentId) {
 		this.departmentId = departmentId;
 	}
-	public String getRank() {
-		return rank;
+	public String getEmployeeRank() {
+		return employeeRank;
 	}
-	public void setRank(String rank) {
-		this.rank = rank;
+	public void setEmployeeRank(String employeeRank) {
+		this.employeeRank = employeeRank;
 	}
 	public Long getSalary() {
 		return salary;
@@ -51,27 +59,37 @@ public class EmploymentVo {
 	public void setSalary(Long salary) {
 		this.salary = salary;
 	}
-	public String getEmployeeNumber() {
-		return employeeNumber;
+	public String getNumber() {
+		return number;
 	}
-	public void setEmployeeNumber(String employeeNumber) {
-		this.employeeNumber = employeeNumber;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
-	public EmploymentVo(Long id, String age, String email, String address, Long departmentId, String rank, Long salary,
-			String employeeNumber) {
+	public EmploymentVo(Long id, String name, String age, String email, String address, Long departmentId, String employeeRank, Long salary,
+			String number) {
 		this.id = id;
+		this.name = name;
 		this.age = age;
 		this.email = email;
 		this.address = address;
 		this.departmentId = departmentId;
-		this.rank = rank;
+		this.employeeRank = employeeRank;
 		this.salary = salary;
-		this.employeeNumber = employeeNumber;
+		this.number = number;
 	}
 	
 	public EmploymentVo() {
 		
 	}
+	@Override
+	public String toString() {
+		return "id:" + id + ", name:" + name + ", age:" + age + ", email:" + email + ", address:"
+				+ address + ", departmentId:" + departmentId + ", employeeRank:" + employeeRank + ", salary:" + salary
+				+ ", number:" + number;
+	}
+	
+	
 		
+	
 }
