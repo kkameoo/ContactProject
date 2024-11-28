@@ -95,7 +95,4 @@ public class MessageRecordVo {
 				+ ", readCheck=" + readCheck + ", regDate=" + regDate + "]";
 	}
 	
-	
-	
-
 }
