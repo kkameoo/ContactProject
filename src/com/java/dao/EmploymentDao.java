@@ -1,4 +1,4 @@
-package com.java.dao;
+package com.java.dao; // 선언역할
 
 import java.util.List;
 
@@ -11,4 +11,6 @@ public interface EmploymentDao {
 	public boolean insert(EmploymentVo vo);
 	public boolean update(EmploymentVo vo);
 	public boolean delete(Long id);
+	public EmploymentVo getEmploymentById(Long id);
+
 }

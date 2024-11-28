@@ -1,6 +1,6 @@
 package com.java.vo;
 
-public class EmploymentVo {
+public class EmploymentVo { // 필드선언
 	private Long id;
 	private String name;
 	private String age;
@@ -11,7 +11,7 @@ public class EmploymentVo {
 	private Long salary;
 	private String number;
 	
-	public Long getId() {
+	public Long getId() { //접근자 설정
 		return id;
 	}
 	public void setId(Long id) {
@@ -67,7 +67,7 @@ public class EmploymentVo {
 	}
 	
 	public EmploymentVo(Long id, String name, String age, String email, String address, Long departmentId, String employeeRank, Long salary,
-			String number) {
+			String number) { // 기본생성자
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -79,7 +79,7 @@ public class EmploymentVo {
 		this.number = number;
 	}
 	
-	public EmploymentVo() {
+	public EmploymentVo() { // 생성자 생성
 		
 	}
 	@Override
