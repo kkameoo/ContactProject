@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -63,7 +65,6 @@ public class EmploymentImpl implements EmploymentDao {
 				Long salary = rs.getLong(8);
 				String number = rs.getString(9);
 				
-				
 				EmploymentVo vo = new EmploymentVo(id, name, age, email, address, departmentId, employeeRank, salary, number);
 				
 				list.add(vo);
@@ -101,15 +102,10 @@ public class EmploymentImpl implements EmploymentDao {
 				String employeeRank = rs.getString(7);
 				Long salary = rs.getLong(8);
 				String number = rs.getString(9);
-				
-				
 				EmploymentVo vo = new EmploymentVo(id, name, age, email, address, departmentId, employeeRank, salary, number);
 				
 				list.add(vo);
 			}
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -207,6 +203,10 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return 1 == deletedCount;
 	}
+	
+	
+	
+	
 	
 	
 }
