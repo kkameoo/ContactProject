@@ -96,33 +96,49 @@ public class ContactApp {
 		scanner.close();
 	}
 	
-
+//	아이디, 이름, 나이, 전화번호, 이메일, 주소, 부서번호, 직급, 월급 순
+	
 	private static void listEmployment() {
 		EmploymentDao dao = new EmploymentImpl();
 		List<EmploymentVo> list = dao.getList();
 		Iterator<EmploymentVo> iter = list.iterator();
 		
-		System.out.println("==========모든 연락처==========");
+		System.out.println("================================ 모든 연락처 ================================");
 		
 		while (iter.hasNext()) {
 			EmploymentVo vo = iter.next();
 			System.out.printf("id : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getName(), vo.getAge(), vo.getEmployeeRank());
 		}
 		
-		System.out.println("====================");
+		System.out.println("==========================================================================");
 	}
 	
-	private static void searchEmployment() {
+	private static void DetailListEmployment() {
+		EmploymentDao dao = new EmploymentImpl();
+		List<EmploymentVo> list = dao.getList();
+		Iterator<EmploymentVo> iter = list.iterator();
 		
+		System.out.println("================================ 모든 상세 연락처 ================================");
+		
+		while (iter.hasNext()) {
+			EmploymentVo vo = iter.next();
+			System.out.printf("id: %d\t  이름: %s\t나이: %s\t   전화번호: %s\t    이메일: %s\t   주소: %s\t 부서 id: %d\t직급: %s\t    월급: %d\n", 
+					vo.getId(), vo.getName(), vo.getAge(), vo.getNumber(), vo.getEmail(), vo.getAddress(), vo.getDepartmentId(), vo.getEmployeeRank(), vo.getSalary());
+		}
+		
+		System.out.println("==========================================================================");
+	}
+	
+	private static void searchEmploymentName() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("검색어 입력: ");
+		
+		System.out.print("검색할 이름 : ");
 		String keywordName = scanner.next();
 		
 		EmploymentDao dao = new EmploymentImpl();
 		List<EmploymentVo> list = dao.search(keywordName);
 		Iterator<EmploymentVo> iter = list.iterator();
 		
-		System.out.println("==========검색된 연락처==========");
 		while (iter.hasNext()) {
 			EmploymentVo vo = iter.next();
 			System.out.printf("id : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getName(), vo.getAge(), vo.getEmployeeRank());
@@ -170,7 +186,36 @@ public class ContactApp {
 			}
 			
 		}
+		scanner.close();
+	}
+	
+	private static void insertEmployment() {
+		Scanner scanner = new Scanner(System.in);
 		
+		System.out.print("이름 : ");
+		String name = scanner.next();
+		System.out.print("나이 : ");
+		String age = scanner.next();
+		System.out.print("전화번호 : ");
+		String number = scanner.next();
+		System.out.print("주소 : ");
+		String address = scanner.next();
+		System.out.print("부서 id : ");
+		Long departmentId = scanner.nextLong();
+		System.out.print("직급 : ");
+		String employeeRank = scanner.next();
+		System.out.print("월급 : ");
+		Long salary = scanner.nextLong();
+		
+		
+		EmploymentVo vo = new EmploymentVo(name, age, number, address, departmentId, employeeRank, salary);
+		
+		EmploymentDao dao = new EmploymentImpl();
+		boolean success = dao.insert(vo);
+		
+		System.out.println("연락처가 " + (success ? "추가되었습니다" : "추가되지않았습니다"));
+		scanner.close();
+	}
 		System.out.println("=========================");
 	}
 	
@@ -207,6 +252,96 @@ public class ContactApp {
 	private static void messageReadUpdate(Long id) {
 		MessageRecordDao dao = new MessageRecordImpl();
 		dao.readUpdate(id);
+		while (iter.hasNext()) {
+			EmploymentVo vo = iter.next();
+			System.out.printf("수정할 연락처 ->\tid: %d    이름: %s    나이: %s    전화번호: %s    이메일: %s    주소: %s    부서 id: %d    직급: %s    월급: %d\n", 
+					vo.getId(), vo.getName(), vo.getAge(), vo.getNumber(), vo.getEmail(), vo.getAddress(), vo.getDepartmentId(), vo.getEmployeeRank(), vo.getSalary());
+		}
+		System.out.println();
+		System.out.println("=================== 수정하기 ===================");
+		
+		System.out.print("수정할 id : ");
+		Long id = scanner.nextLong();
+		System.out.print("수정할 이름 : ");
+		String name = scanner.next();
+		System.out.print("수정할 나이 : ");
+		String age = scanner.next();
+		System.out.print("수정할 전화번호 : ");
+		String number = scanner.next();
+		System.out.print("수정할 이메일 : ");
+		String email = scanner.next();
+		System.out.print("수정할 주소 : ");
+		String address = scanner.next();
+		System.out.print("수정할 부서 id : ");
+		Long departmentId = scanner.nextLong();
+		System.out.print("수정할 직급 : ");
+		String employeeRank = scanner.next();
+		System.out.print("수정할 월급 : ");
+		Long salary = scanner.nextLong();	
+		
+		EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
+		EmploymentDao dao2 = new EmploymentImpl();
+		boolean success = dao2.update(vo);
+		
+		System.out.println("연락처가 " + (success ? "수정되었습니다" : "수정되지않았습니다"));
+		scanner.close();
+	}
+	
+	private static void deleteEmployment() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("삭제할 연락처의 이름 : ");
+		String name = scanner.next();
+		
+		EmploymentDao dao = new EmploymentImpl();
+		boolean success = dao.delete(name);
+		
+		System.out.println("연락처가 " + (success ? "삭제되었습니다" : "삭제되지않았습니다"));
+		scanner.close();
+		while (iter.hasNext()) {
+			EmploymentVo vo = iter.next();
+			System.out.printf("수정할 연락처 ->\tid: %d    이름: %s    나이: %s    전화번호: %s    이메일: %s    주소: %s    부서 id: %d    직급: %s    월급: %d\n", 
+					vo.getId(), vo.getName(), vo.getAge(), vo.getNumber(), vo.getEmail(), vo.getAddress(), vo.getDepartmentId(), vo.getEmployeeRank(), vo.getSalary());
+		}
+		System.out.println();
+		System.out.println("=================== 수정하기 ===================");
+		
+		System.out.print("수정할 id : ");
+		Long id = scanner.nextLong();
+		System.out.print("수정할 이름 : ");
+		String name = scanner.next();
+		System.out.print("수정할 나이 : ");
+		String age = scanner.next();
+		System.out.print("수정할 전화번호 : ");
+		String number = scanner.next();
+		System.out.print("수정할 이메일 : ");
+		String email = scanner.next();
+		System.out.print("수정할 주소 : ");
+		String address = scanner.next();
+		System.out.print("수정할 부서 id : ");
+		Long departmentId = scanner.nextLong();
+		System.out.print("수정할 직급 : ");
+		String employeeRank = scanner.next();
+		System.out.print("수정할 월급 : ");
+		Long salary = scanner.nextLong();	
+		
+		EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
+		EmploymentDao dao2 = new EmploymentImpl();
+		boolean success = dao2.update(vo);
+		
+		System.out.println("연락처가 " + (success ? "수정되었습니다" : "수정되지않았습니다"));
+		scanner.close();
+	}
+	
+	private static void deleteEmployment() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("삭제할 연락처의 이름 : ");
+		String name = scanner.next();
+		
+		EmploymentDao dao = new EmploymentImpl();
+		boolean success = dao.delete(name);
+		
+		System.out.println("연락처가 " + (success ? "삭제되었습니다" : "삭제되지않았습니다"));
+		scanner.close();
 	}
 	
 }

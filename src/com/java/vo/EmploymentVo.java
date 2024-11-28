@@ -4,12 +4,13 @@ public class EmploymentVo {
 	private Long id;
 	private String name;
 	private String age;
+	private String number;
 	private String email;
 	private String address;
 	private Long departmentId;
 	private String employeeRank;
 	private Long salary;
-	private String number;
+	
 	
 	public Long getId() {
 		return id;
@@ -28,6 +29,12 @@ public class EmploymentVo {
 	}
 	public void setAge(String age) {
 		this.age = age;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	public String getEmail() {
 		return email;
@@ -59,34 +66,56 @@ public class EmploymentVo {
 	public void setSalary(Long salary) {
 		this.salary = salary;
 	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
+
+	
+	public EmploymentVo(String name, String age, String number, String address, Long departmentId, String employeeRank, Long salary) {
+		this.name = name;
+		this.age = age;
 		this.number = number;
+		this.address = address;
+		this.departmentId = departmentId;
+		this.employeeRank = employeeRank;
+		this.salary = salary;
+		
 	}
 	
-	public EmploymentVo(Long id, String name, String age, String email, String address, Long departmentId, String employeeRank, Long salary,
-			String number) {
+	public EmploymentVo(String name, String age, String number, String email, String address, Long departmentId, String employeeRank, Long salary) {
+		this.name = name;
+		this.age = age;
+		this.number = number;
+		this.email = email;
+		this.address = address;
+		this.departmentId = departmentId;
+		this.employeeRank = employeeRank;
+		this.salary = salary;	
+	}
+	
+	public EmploymentVo(Long id, String name, String age, String number, String email, String address, Long departmentId, String employeeRank, Long salary) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
+		this.number = number;
 		this.email = email;
 		this.address = address;
 		this.departmentId = departmentId;
 		this.employeeRank = employeeRank;
 		this.salary = salary;
-		this.number = number;
 	}
 	
 	public EmploymentVo() {
 		
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "id:" + id + ", name:" + name + ", age:" + age + ", email:" + email + ", address:"
-				+ address + ", departmentId:" + departmentId + ", employeeRank:" + employeeRank + ", salary:" + salary
-				+ ", number:" + number;
+		return "EmploymentVo [id=" + id + ", name=" + name + ", age=" + age + ", number=" + number + ", email=" + email
+				+ ", address=" + address + ", departmentId=" + departmentId + ", employeeRank=" + employeeRank
+				+ ", salary=" + salary + "]";
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 71d4eb909d549072e406e4dd79d44cfa43a4794f
 }
