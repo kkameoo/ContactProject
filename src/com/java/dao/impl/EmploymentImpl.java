@@ -1,4 +1,4 @@
-package com.java.dao.impl;
+package com.java.dao.impl; // 구현 해주기위한 메서드 설계역할
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,10 +20,11 @@ public class EmploymentImpl implements EmploymentDao {
 	static final String dbuser = "root";	
 	static final String dbpass = "root"; 
 	
-	private Connection getConnection() throws SQLException {
+	private Connection getConnection() throws SQLException { // 커넥션객체
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 			conn = DriverManager.getConnection(dburl, dbuser, dbpass);
 		} catch (ClassNotFoundException e) {
 			System.err.println("드라이버 로드 실패");
@@ -66,6 +67,12 @@ public class EmploymentImpl implements EmploymentDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			} catch(Exception e) {}
 		}
 		return list;
 	}
@@ -98,6 +105,7 @@ public class EmploymentImpl implements EmploymentDao {
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
 				
+<<<<<<< HEAD
 				
 				
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
@@ -145,6 +153,9 @@ public class EmploymentImpl implements EmploymentDao {
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
+=======
+				EmploymentVo vo = new EmploymentVo(id, name, age, email, address, departmentId, employeeRank, salary, number);
+>>>>>>> 131252e7d9d2230afb7134cdc9eeda8a1191e803
 				
 				list.add(vo);
 			}
@@ -255,6 +266,10 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return list;
 	}
+	
+	
+	
+	
 
 	@Override
 	public boolean insert(EmploymentVo vo) {
@@ -347,6 +362,7 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return 1 == deletedCount;
 	}
+<<<<<<< HEAD
 	
 	
 	
@@ -354,4 +370,52 @@ public class EmploymentImpl implements EmploymentDao {
 	
 	
 }
+=======
+
+	@Override
+	public EmploymentVo getEmploymentById(Long keyword) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		EmploymentVo vo = null;
+		try {
+			conn = getConnection();
+			String sql = "SELECT id, name, age, email, address, department_id, employee_rank, salary, number " +
+					"FROM employees " +
+					"WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, keyword);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				Long id = rs.getLong(1);
+				String name = rs.getString(2);
+				String age = rs.getString(3);
+				String email = rs.getString(4);
+				String address = rs.getString(5);
+				Long departmentId = rs.getLong(6);
+				String employeeRank = rs.getString(7);
+				Long salary = rs.getLong(8);
+				String number = rs.getString(9);
+				vo = new EmploymentVo(id, name, age, email, address, departmentId, employeeRank, salary, number);
+			}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if( rs != null) rs.close();
+					if( pstmt != null ) pstmt.close();
+					if( conn != null ) conn.close();
+				} catch (Exception e) {}
+			}
+		return vo;
+	}
+}
+						
+
+
+	
+>>>>>>> 131252e7d9d2230afb7134cdc9eeda8a1191e803
 
