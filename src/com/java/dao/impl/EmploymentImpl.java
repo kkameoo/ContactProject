@@ -32,7 +32,7 @@ public class EmploymentImpl implements EmploymentDao {
 		return conn;
 	}
 
-
+	// 모든 목록 얻기
 	@Override
 	public List<EmploymentVo> getList() {
 		
@@ -77,6 +77,7 @@ public class EmploymentImpl implements EmploymentDao {
 		return list;
 	}
 
+	// name 검색
 	@Override
 	public List<EmploymentVo> search(String keyword) {
 		
@@ -104,10 +105,6 @@ public class EmploymentImpl implements EmploymentDao {
 				Long departmentId = rs.getLong(7);
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
-				
-<<<<<<< HEAD
-				
-				
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
 				
 				list.add(vo);
@@ -125,6 +122,7 @@ public class EmploymentImpl implements EmploymentDao {
 		return list;
 	}
 	
+	// ID 검색
 	@Override
 	public List<EmploymentVo> searchId(Long keyId) {
 		
@@ -153,10 +151,6 @@ public class EmploymentImpl implements EmploymentDao {
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
-=======
-				EmploymentVo vo = new EmploymentVo(id, name, age, email, address, departmentId, employeeRank, salary, number);
->>>>>>> 131252e7d9d2230afb7134cdc9eeda8a1191e803
-				
 				list.add(vo);
 			}
 				
@@ -172,6 +166,7 @@ public class EmploymentImpl implements EmploymentDao {
 		return list;
 	}
 
+	// 부서 ID 검색
 	@Override
 	public List<EmploymentVo> searchDptId(Long keyDptId) {
 		
@@ -220,6 +215,7 @@ public class EmploymentImpl implements EmploymentDao {
 		return list;
 	}
 	
+	// 전화번호 검색
 	@Override
 	public List<EmploymentVo> searchNumber(String keyNumber) {
 		
@@ -266,11 +262,8 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return list;
 	}
-	
-	
-	
-	
 
+	// 사원 추가
 	@Override
 	public boolean insert(EmploymentVo vo) {
 		Connection conn = null;
@@ -304,6 +297,7 @@ public class EmploymentImpl implements EmploymentDao {
 		return 1 == insertedCount;
 	}
 
+	// 사원 수정
 	@Override
 	public boolean update(EmploymentVo vo) {
 		Connection conn = null;
@@ -312,7 +306,7 @@ public class EmploymentImpl implements EmploymentDao {
 		
 		try {
 			conn = getConnection();
-			String sql = "UPDATE employees SET name=?, age=?, number=? email=?, address=?, department_id=?, employee_rank=?, salary=? " +
+			String sql = "UPDATE employees SET name=?, age=?, number=?, email=?, address=?, department_id=?, employee_rank=?, salary=? " +
 					"WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -338,8 +332,9 @@ public class EmploymentImpl implements EmploymentDao {
 		return 1 == updatedCount;
 	}
 
+	// 사원 삭제
 	@Override
-	public boolean delete(String name) {
+	public boolean delete(Long id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int deletedCount = 0;
@@ -347,9 +342,9 @@ public class EmploymentImpl implements EmploymentDao {
 		try {
 			conn = getConnection();
 			String sql = "DELETE FROM employees " +
-					"WHERE name=?";
+					"WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
+			pstmt.setLong(1, id);
 			
 			deletedCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -362,16 +357,8 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return 1 == deletedCount;
 	}
-<<<<<<< HEAD
-	
-	
-	
-	
-	
-	
-}
-=======
 
+	// ID로 1개 검색
 	@Override
 	public EmploymentVo getEmploymentById(Long keyword) {
 		
@@ -398,9 +385,8 @@ public class EmploymentImpl implements EmploymentDao {
 				String employeeRank = rs.getString(7);
 				Long salary = rs.getLong(8);
 				String number = rs.getString(9);
-				vo = new EmploymentVo(id, name, age, email, address, departmentId, employeeRank, salary, number);
-			}
-				
+				vo = new EmploymentVo(id, name, age, number,email, address, departmentId, employeeRank, salary);
+			}				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -413,9 +399,5 @@ public class EmploymentImpl implements EmploymentDao {
 		return vo;
 	}
 }
-						
-
-
-	
->>>>>>> 131252e7d9d2230afb7134cdc9eeda8a1191e803
+					
 

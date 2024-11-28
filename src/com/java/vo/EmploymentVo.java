@@ -79,7 +79,6 @@ public class EmploymentVo { // 필드선언
 		
 	}
 	
-<<<<<<< HEAD
 	public EmploymentVo(String name, String age, String number, String email, String address, Long departmentId, String employeeRank, Long salary) {
 		this.name = name;
 		this.age = age;
@@ -92,10 +91,6 @@ public class EmploymentVo { // 필드선언
 	}
 	
 	public EmploymentVo(Long id, String name, String age, String number, String email, String address, Long departmentId, String employeeRank, Long salary) {
-=======
-	public EmploymentVo(Long id, String name, String age, String email, String address, Long departmentId, String employeeRank, Long salary,
-			String number) { // 기본생성자
->>>>>>> 131252e7d9d2230afb7134cdc9eeda8a1191e803
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -107,10 +102,7 @@ public class EmploymentVo { // 필드선언
 		this.salary = salary;
 	}
 	
-	public EmploymentVo() { // 생성자 생성
-		
-	}
-	
+	public EmploymentVo() {}
 	
 	@Override
 	public String toString() {
@@ -118,9 +110,4 @@ public class EmploymentVo { // 필드선언
 				+ ", address=" + address + ", departmentId=" + departmentId + ", employeeRank=" + employeeRank
 				+ ", salary=" + salary + "]";
 	}
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> 71d4eb909d549072e406e4dd79d44cfa43a4794f
 }
