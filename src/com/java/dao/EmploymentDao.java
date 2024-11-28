@@ -11,4 +11,5 @@ public interface EmploymentDao {
 	public boolean insert(EmploymentVo vo);
 	public boolean update(EmploymentVo vo);
 	public boolean delete(Long id);
+	
 }
