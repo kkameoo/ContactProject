@@ -75,6 +75,49 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return list;
 	}
+	
+	// getListDesc
+	@Override
+    public List<EmploymentVo> getListDesc() {
+        List<EmploymentVo> list = new ArrayList<>();
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = getConnection();
+            stmt = conn.createStatement();
+            
+            String sql = "SELECT id, name, age, number, email, address, department_id, employee_rank, salary " +
+                    "FROM employees order by id Desc";   
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong(1);
+                String name = rs.getString(2);
+                String age = rs.getString(3);
+                String number = rs.getString(4);
+                String email = rs.getString(5);
+                String address = rs.getString(6);
+                Long departmentId = rs.getLong(7);
+                String employeeRank = rs.getString(8);
+                Long salary = rs.getLong(9);
+                
+                EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
+                
+                
+                list.add(vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch(Exception e) {}
+        }       
+        return list;        
+    }
 
 	// name 검색
 	@Override

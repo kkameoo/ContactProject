@@ -16,6 +16,7 @@ public interface EmploymentDao {
 	public boolean update(EmploymentVo vo);
 	public boolean delete(Long id);
 	public EmploymentVo getEmploymentById(Long id);
+	public List<EmploymentVo> getListDesc();
 	
 	public List<DepartmentListVo> searchDptId(Long keyDptId);	//	부서별 목록
 	public List<RegionsVo> searchRegions(Long keyRegions);//	지사별 목록
