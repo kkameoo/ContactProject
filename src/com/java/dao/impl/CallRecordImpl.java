@@ -108,7 +108,6 @@ public class CallRecordImpl implements CallRecordDao{
 					+ ") AS a )";
 			pstmt = conn.prepareStatement(sql);
 			
-			
 			String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			pstmt.setString(1, formatedNow);
 			
@@ -121,7 +120,6 @@ public class CallRecordImpl implements CallRecordDao{
 				if(pstmt != null) pstmt.close();
 				if(conn != null) conn.close();
 			} catch(Exception e) {}
-		}
-		
+		}		
 	}
 }

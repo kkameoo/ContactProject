@@ -11,7 +11,6 @@ public class EmploymentVo { // 필드선언
 	private String employeeRank;
 	private Long salary;
 	
-	
 	public Long getId() { //접근자 설정
 		return id;
 	}
@@ -103,6 +102,7 @@ public class EmploymentVo { // 필드선언
 	}
 	
 	public EmploymentVo() {}
+	
 	
 	@Override
 	public String toString() {
