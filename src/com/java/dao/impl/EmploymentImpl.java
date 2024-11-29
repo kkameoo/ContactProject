@@ -61,8 +61,6 @@ public class EmploymentImpl implements EmploymentDao {
 				Long salary = rs.getLong(9);
 				
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
-				
-				
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -183,7 +181,6 @@ public class EmploymentImpl implements EmploymentDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, keyDptId);
 			rs = pstmt.executeQuery();
-
 			
 			while (rs.next()) {
 				Long id = rs.getLong(1);
@@ -195,8 +192,6 @@ public class EmploymentImpl implements EmploymentDao {
 				Long departmentId = rs.getLong(7);
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
-				
-			
 				
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
 				
@@ -243,9 +238,6 @@ public class EmploymentImpl implements EmploymentDao {
 				Long departmentId = rs.getLong(7);
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
-				
-			
-				
 				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
 				
 				list.add(vo);
@@ -399,5 +391,3 @@ public class EmploymentImpl implements EmploymentDao {
 		return vo;
 	}
 }
-					
-

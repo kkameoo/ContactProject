@@ -67,7 +67,6 @@ public class EmploymentVo { // 필드선언
 		this.salary = salary;
 	}
 
-	
 	public EmploymentVo(String name, String age, String number, String address, Long departmentId, String employeeRank, Long salary) {
 		this.name = name;
 		this.age = age;
@@ -76,7 +75,6 @@ public class EmploymentVo { // 필드선언
 		this.departmentId = departmentId;
 		this.employeeRank = employeeRank;
 		this.salary = salary;
-		
 	}
 	
 	public EmploymentVo(String name, String age, String number, String email, String address, Long departmentId, String employeeRank, Long salary) {

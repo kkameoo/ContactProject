@@ -12,7 +12,6 @@ public interface EmploymentDao {
 	public List<EmploymentVo> searchNumber(String keyNumber);	//	전화번호 검색
 	public boolean insert(EmploymentVo vo);
 	public boolean update(EmploymentVo vo);
-	
 	public boolean delete(Long id);
 	
 	public EmploymentVo getEmploymentById(Long id);

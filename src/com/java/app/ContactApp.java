@@ -29,8 +29,8 @@ public class ContactApp {
 			
 			System.out.println("-----연락처 프로그램-----");
 			System.out.println("번호를 선택하세요.");
-			System.out.println("0.종료 \n1.전체목록 \n2.검색 \n3.사원 정보 추가 "
-					+ "\n4.1 부서별 목록  \n5.통화\t 6.통화 기록 \n7.메세지 송신\t 8.메세지 기록 ");
+			System.out.println("0.종료 \n1.전체 목록 \n2.검색 \n3.사원 정보 추가 "
+					+ "\n4.그룹별 목록  \n5.통화\t 6.통화 기록 \n7.메세지 송신\t 8.메세지 기록 ");
 			int num = scanner.nextInt();
 			
 			switch(num) {
@@ -42,8 +42,8 @@ public class ContactApp {
 				case 1 : {
 					while (true) {
 						listEmployment();
-						System.out.println("뒤로가기 0번");
-						System.out.print(">");
+						System.out.println("0.뒤로가기");
+						System.out.print("Id 입력 >");
 						Long back = scanner.nextLong(); 
 						if (back == 0) {
 							break;
@@ -72,8 +72,38 @@ public class ContactApp {
 					break;
 				}
 				case 2 : {
-					searchEmploymentName();
-					back();
+					List<EmploymentVo> list = searchEmploymentName();
+					while (true) {
+						for(EmploymentVo vo : list) {
+						System.out.printf("id : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getName(), vo.getAge(), vo.getEmployeeRank());
+					}
+						System.out.println("0.뒤로가기");
+						System.out.print("Id 입력 >");
+						Long back = scanner.nextLong();
+						if (back == 0) {
+							break;
+						} else if(back > 0) {
+							while (true) {
+								showDetail(back);
+								System.out.println("0.뒤로가기");
+								System.out.println("1.삭제");
+								System.out.println("2.수정");
+								System.out.print(">");
+								int back2 = scanner.nextInt(); 
+								if (back2 == 0) {
+									break;
+								} else if(back2 == 1) {
+									deleteEmployment(back);
+									break;
+								} else if (back2 == 2) {
+									updateEmployment(back);
+								}
+							}
+							
+						} else {
+							System.out.println("잘못된 입력");
+						}
+					}
 					break;
 					
 				}
@@ -83,21 +113,46 @@ public class ContactApp {
 				}
 				
 				case 4 : {
-					System.out.println("1. 영업부\n2. 재료개발루\n3. 사업부\n4. 총무부\n5. 인사부\n6. 기획부"
-							+ "\n7. 회계부");
-					Long dptId = scanner.nextLong();
-					
-					while (true) {
-						searchDptIdEx(dptId);
-						back();
-						break;
+					while(true) {
+						System.out.println("0.뒤로가기");
+						System.out.println("1.부서별 목록");
+						System.out.println("2.지사별 목록");
+						System.out.println("3.직급별 목록");
+						System.out.println("----------------");
+						System.out.print(">");
+						int numb = scanner.nextInt();
+						if(numb == 0) {
+							break;
+						}
+						if(numb == 1) {
+							while(true) {
+								System.out.println("1. 영업부\n2. 재료개발부\n3. 사업부\n4. 총무부\n5. 인사부\n6. 기획부"
+										+ "\n7. 회계부");
+								Long dptId = scanner.nextLong();
+								System.out.println("0.뒤로가기");
+								System.out.print("ID 선택 >");
+								if (dptId == 0) {
+									break;
+								}
+								while (true) {
+									searchDptIdEx(dptId);
+									back();
+									break;
+								}
+							}
+						} else if (numb == 2) {
+							System.out.println("1. 부산\n2. 대구\n3. 인천\n4. 광주\n5. 대전\n6. 울산 \n7. 서울");
+						} else if (numb == 3) {
+							System.out.println("1. 사원\n2. 대리\n3. 과장\n4. 차장\n5. 부장\n");
+						} else {
+							System.out.println("잘못된 입력");
+						}
 					}
 					break;
 				}
 				
-				
 				case 5 : {
-					searchEmploymentName();
+					searchEmploymentName2();
 					calledEmployment();
 					break;
 				}
@@ -107,7 +162,7 @@ public class ContactApp {
 					break;
 				}
 				case 7 : {
-					searchEmploymentName();
+					searchEmploymentName2();
 					messageSend();
 					break;
 				}
@@ -124,8 +179,8 @@ public class ContactApp {
 							messageReadUpdate(numb);
 							getMessage(numb);
 							while (true) {
-								System.out.println("뒤로가기 0번");
-								System.out.print(">");
+								System.out.println("0.뒤로가기");
+								System.out.print("Id 입력 >");
 								Long numc = scanner.nextLong();
 								if (numc == 0) {
 									break;
@@ -170,7 +225,23 @@ public class ContactApp {
 //	}
 	
 	// 이름 연락처 검색
-	private static void searchEmploymentName() {
+	private static List<EmploymentVo> searchEmploymentName() {
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.print("검색할 이름 : ");
+		String keywordName = scanner.next();
+		
+		EmploymentDao dao = new EmploymentImpl();
+		List<EmploymentVo> list = dao.search(keywordName);
+		return list;
+//		Iterator<EmploymentVo> iter = list.iterator(); 폐기된 설정
+//		while (iter.hasNext()) {
+//			EmploymentVo vo = iter.next();
+//			System.out.printf("id : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getName(), vo.getAge(), vo.getEmployeeRank());
+//		}
+	}
+	
+	private static void searchEmploymentName2() {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.print("검색할 이름 : ");
@@ -179,7 +250,6 @@ public class ContactApp {
 		EmploymentDao dao = new EmploymentImpl();
 		List<EmploymentVo> list = dao.search(keywordName);
 		Iterator<EmploymentVo> iter = list.iterator();
-		
 		while (iter.hasNext()) {
 			EmploymentVo vo = iter.next();
 			System.out.printf("id : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getName(), vo.getAge(), vo.getEmployeeRank());
@@ -268,7 +338,8 @@ public class ContactApp {
 		System.out.println("사원 번호를 입력하세요.");
 		Long id = scanner.nextLong();
 		System.out.println("전달할 메시지를 입력하세요.");
-		String message = scanner.next();
+		scanner.nextLine();
+		String message = scanner.nextLine();
 		dao.send(message, id);
 		System.out.println("메시지가 전달되었습니다.");
 	}
@@ -348,7 +419,7 @@ public class ContactApp {
 	private static void back() {
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
-			System.out.println("뒤로가기 0번");
+			System.out.println("0.뒤로가기");
 			System.out.print(">");
 			int back = scanner.nextInt(); 
 			if (back == 0) {
