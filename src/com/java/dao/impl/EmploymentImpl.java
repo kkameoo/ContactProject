@@ -6,13 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.java.dao.EmploymentDao;
+import com.java.vo.DepartmentListVo;
 import com.java.vo.EmploymentVo;
+import com.java.vo.RankVo;
+import com.java.vo.RegionsVo;
 
 
 public class EmploymentImpl implements EmploymentDao {
@@ -164,19 +165,21 @@ public class EmploymentImpl implements EmploymentDao {
 		return list;
 	}
 
-	// 부서 ID 검색
+	
+	
+
+	// 부서별 목록
 	@Override
-	public List<EmploymentVo> searchDptId(Long keyDptId) {
-		
-		List<EmploymentVo> list = new ArrayList<>();
+	public List<DepartmentListVo> searchDptId(Long keyDptId) {
+		List<DepartmentListVo> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = getConnection();
-			String sql = "SELECT id, name, age, number, email, address, department_id, employee_rank, salary " +
-					"FROM employees " +
+			String sql = "SELECT emp.id, emp.name, age, number, email, address, dpt.name, employee_rank, salary " +
+					"FROM employees emp JOIN departments dpt ON emp.department_id = dpt.id " +
 					"WHERE department_id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, keyDptId);
@@ -189,13 +192,13 @@ public class EmploymentImpl implements EmploymentDao {
 				String number = rs.getString(4);
 				String email = rs.getString(5);
 				String address = rs.getString(6);
-				Long departmentId = rs.getLong(7);
+				String departmentName = rs.getString(7);
 				String employeeRank = rs.getString(8);
 				Long salary = rs.getLong(9);
 				
-				EmploymentVo vo = new EmploymentVo(id, name, age, number, email, address, departmentId, employeeRank, salary);
-				
+				DepartmentListVo vo = new DepartmentListVo(id, name, age, number, email, address, departmentName, employeeRank, salary);
 				list.add(vo);
+			
 			}
 				
 		} catch (SQLException e) {
@@ -209,6 +212,7 @@ public class EmploymentImpl implements EmploymentDao {
 		}
 		return list;
 	}
+	
 	
 	// 전화번호 검색
 	@Override
@@ -265,17 +269,18 @@ public class EmploymentImpl implements EmploymentDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "INSERT INTO employees (name, age, number, address, department_id, employee_rank, salary) " + 
-					"VALUES(?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO employees (name, age, number, email, address, department_id, employee_rank, salary) " + 
+					"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getAge());
 			pstmt.setString(3, vo.getNumber());
-			pstmt.setString(4, vo.getAddress());
-			pstmt.setLong(5, vo.getDepartmentId());
-			pstmt.setString(6, vo.getEmployeeRank());
-			pstmt.setLong(7, vo.getSalary());
+			pstmt.setString(4, vo.getEmail());
+			pstmt.setString(5, vo.getAddress());
+			pstmt.setLong(6, vo.getDepartmentId());
+			pstmt.setString(7, vo.getEmployeeRank());
+			pstmt.setLong(8, vo.getSalary());
 					
 			insertedCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -390,4 +395,159 @@ public class EmploymentImpl implements EmploymentDao {
 			}
 		return vo;
 	}
+	
+//	지사별 목록
+	@Override
+	public List<RegionsVo> searchRegions(Long keyRegions) {
+		List<RegionsVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			String sql = "SELECT emp.id, emp.name, emp.age, emp.number, dpt.name, emp.employee_rank, dpt.department_number, reg.name " + 
+					"FROM employees emp JOIN departments dpt ON emp.department_id = dpt.id " + 
+				    "JOIN regions reg ON dpt.regions_id = reg.id " +
+				    "WHERE reg.id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, keyRegions);
+			rs = pstmt.executeQuery();
+
+			
+			while (rs.next()) {
+				Long id = rs.getLong(1);
+				String name = rs.getString(2);
+				String age = rs.getString(3);
+				String number = rs.getString(4);
+				String departmentName = rs.getString(5);
+				String employeeRank = rs.getString(6);
+				String departmentNumber = rs.getString(7);
+				String regionsName = rs.getString(8);
+				
+			
+				
+				RegionsVo vo = new RegionsVo(id, name, age, number, departmentName, employeeRank, departmentNumber, regionsName);
+				list.add(vo);
+			
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {}
+		}
+		return list;
+	}
+	
+	//	직급별 목록
+	@Override
+	public List<RankVo> searchRank(String keyRank) {
+		List<RankVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			String sql = "SELECT emp.id, emp.name, emp.age, emp.number, dpt.name, emp.employee_rank, emp.salary " + 
+					"FROM employees emp JOIN departments dpt ON emp.department_id = dpt.id " + 
+				    "WHERE emp.employee_rank=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyRank);
+			rs = pstmt.executeQuery();
+
+			
+			while (rs.next()) {
+				Long id = rs.getLong(1);
+				String name = rs.getString(2);
+				String age = rs.getString(3);
+				String number = rs.getString(4);
+				String departmentName = rs.getString(5);
+				String employeeRank = rs.getString(6);
+				Long salary = rs.getLong(7);
+				
+				
+				RankVo vo = new RankVo(id, name, age, number, departmentName, employeeRank, salary);
+				list.add(vo);
+			
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {}
+		}
+		return list;
+	}
+	
+	
+	// 사원 수정
+		@Override
+		public boolean updateCustom(int num, String value, Long id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int updatedCount = 0;
+			String a = "";
+			try {
+				switch (num) {
+				case 1 : {
+					a = "name";
+					break;
+					}
+				case 2 : {
+					a = "age";
+					break;
+					}
+				case 3 : {
+					a = "number";
+					break;
+					}
+				case 4 : {
+					a = "email";
+					break;
+					}
+				case 5 : {
+					a = "address";
+					break;
+					}
+				case 6 : {
+					a = "department_id";
+					break;
+					}
+				case 7 : {
+					a = "employee_rank";
+					break;
+					}
+				case 8 : {
+					a = "salary";
+					break;
+					}
+				}
+				conn = getConnection();
+				String sql = "UPDATE employees SET " + a + " = ? " +
+						"WHERE id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, value);
+				pstmt.setLong(2, id);
+				
+				updatedCount = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null) pstmt.close();
+					if (conn != null) conn.close();
+				} catch (Exception e) {}
+			}
+			return 1 == updatedCount;
+		}
 }

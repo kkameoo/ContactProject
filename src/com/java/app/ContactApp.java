@@ -12,8 +12,11 @@ import com.java.dao.impl.CallRecordImpl;
 import com.java.dao.impl.EmploymentImpl;
 import com.java.dao.impl.MessageRecordImpl;
 import com.java.vo.CallRecordVo;
+import com.java.vo.DepartmentListVo;
 import com.java.vo.EmploymentVo;
 import com.java.vo.MessageRecordVo;
+import com.java.vo.RankVo;
+import com.java.vo.RegionsVo;
 
 public class ContactApp {
 
@@ -29,8 +32,13 @@ public class ContactApp {
 			
 			System.out.println("-----연락처 프로그램-----");
 			System.out.println("번호를 선택하세요.");
+<<<<<<< HEAD
 			System.out.println("0.종료 \n1.전체 목록 \n2.검색 \n3.사원 정보 추가 "
 					+ "\n4.그룹별 목록  \n5.통화\t 6.통화 기록 \n7.메세지 송신\t 8.메세지 기록 ");
+=======
+			System.out.println("0.종료 \n1.전체목록 \n2.검색 \n3.사원 정보 추가 "
+					+ "\n4.목록  \n5.통화\t 6.통화 기록 \n7.메세지 송신\t 8.메세지 기록 ");
+>>>>>>> d4506704d031c47de0c3f7f119e7b639d42dbb74
 			int num = scanner.nextInt();
 			
 			switch(num) {
@@ -113,6 +121,7 @@ public class ContactApp {
 				}
 				
 				case 4 : {
+<<<<<<< HEAD
 					while(true) {
 						System.out.println("0.뒤로가기");
 						System.out.println("1.부서별 목록");
@@ -147,8 +156,48 @@ public class ContactApp {
 						} else {
 							System.out.println("잘못된 입력");
 						}
+=======
+					while (true) {
+						System.out.println("뒤로가기 0번");
+						System.out.print("1. 부서별 목록\t 2. 지사별 목록\t 3. 직급별 목록\n>");
+						Long back = scanner.nextLong(); 
+						if (back == 0) {
+							break;
+						} else if(back > 0) {
+							while (true) {
+								if(back == 1) {
+										System.out.println("뒤로가기 0번");
+										System.out.println("1. 영업부\t2. 재료개발부\t3. 사업부\t4. 총무부\t5. 인사부\t6. 기획부" + "\t7. 회계부" 
+												+ "\n8. 개발부" + "\t9. 생산관리부" + "\t10. 전산IT부" + "\t11. 교육상품부" + "\t12. 마케팅부" + "\t13. 품질관리부" + "\t14. 해외영업부");
+										System.out.print("원하는 부서 번호 입력\n>");
+										Long dptId = scanner.nextLong();
+										searchDptIdEx(dptId);
+										break;
+								} else if(back == 2) {
+										System.out.println("뒤로가기 0번");
+										System.out.println("1. 부산\t2. 대구\t3. 인천\t4. 광주\t5. 대전\t6. 울산" + "\t7. 서울"); 
+										System.out.print("원하는 지사 번호 입력\n>");
+										Long keyRegions = scanner.nextLong();
+										searchRegions(keyRegions);
+										break;
+								} else if(back == 3) {
+										System.out.println("뒤로가기 0번");
+										System.out.println("사원\t 대리\t 과장\t 차장\t 부장");
+										System.out.print("원하는 직급 입력\n>");
+										int keyRank = scanner.nextInt();
+										searchRank(keyRank);
+										break;
+									}
+								}
+							
+						} else {
+							System.out.println("잘못된 입력");
+						}
+						back();
+						break;
+>>>>>>> d4506704d031c47de0c3f7f119e7b639d42dbb74
 					}
-					break;
+					break;			
 				}
 				
 				case 5 : {
@@ -189,6 +238,9 @@ public class ContactApp {
 						}
 					}
 					break;
+				} case 9 : {
+					EmploymentDao dao = new EmploymentImpl();
+					dao.updateCustom(4, "kkkk", Long.valueOf(119));
 				}
 			}
 		}
@@ -201,12 +253,12 @@ public class ContactApp {
 		List<EmploymentVo> list = dao.getList();
 		Iterator<EmploymentVo> iter = list.iterator();
 		
-		System.out.println("================================ 모든 연락처 ================================");
+		System.out.println("===================== 모든 연락처 =====================");
 		while (iter.hasNext()) {
 			EmploymentVo vo = iter.next();
 			System.out.printf("id : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getName(), vo.getAge(), vo.getEmployeeRank());
 		}
-		System.out.println("==========================================================================");
+		System.out.println("==============================================================");
 	}
 	
 //	// 모든 상세 연락처
@@ -312,6 +364,8 @@ public class ContactApp {
 		String age = scanner.next();
 		System.out.print("전화번호 : ");
 		String number = scanner.next();
+		System.out.print("이메일 : ");
+		String email = scanner.next();
 		System.out.print("주소 : ");
 		String address = scanner.next();
 		System.out.print("부서 id : ");
@@ -322,7 +376,7 @@ public class ContactApp {
 		Long salary = scanner.nextLong();
 		
 		
-		EmploymentVo vo = new EmploymentVo(name, age, number, address, departmentId, employeeRank, salary);
+		EmploymentVo vo = new EmploymentVo(name, age, number, email, address, departmentId, employeeRank, salary);
 		
 		EmploymentDao dao = new EmploymentImpl();
 		boolean success = dao.insert(vo);
@@ -371,6 +425,7 @@ public class ContactApp {
 		dao.readUpdate(id);
 	}
 
+	// 사원 수정
 	private static void updateEmployment(Long id) {
 		
 		Scanner scanner = new Scanner(System.in);
@@ -397,6 +452,7 @@ public class ContactApp {
         
         System.out.println("연락처가 " + (success ? "수정되었습니다" : "수정되지않았습니다"));
 	}
+	
 	
    // 사원 삭제
 	private static void deleteEmployment(Long id) {
@@ -430,13 +486,66 @@ public class ContactApp {
 		}
 	}
 	
+	//	부서별 목록
 	private static void searchDptIdEx(Long dptId) {
 		EmploymentDao dao = new EmploymentImpl();
-		List<EmploymentVo> list = dao.searchDptId(dptId);
-			Iterator<EmploymentVo> iter = list.iterator();
+		List<DepartmentListVo> list = dao.searchDptId(dptId);
+			Iterator<DepartmentListVo> iter = list.iterator();
 			while(iter.hasNext()) {
-				EmploymentVo vo = iter.next();
-				System.out.printf("id : %d\t  부서 번호 : %d\t    이름 : %s\t    나이 : %s\t 직급 : %s\n", vo.getId(), vo.getDepartmentId(),  vo.getName(), vo.getAge(), vo.getEmployeeRank());
+				DepartmentListVo vo = iter.next();
+				System.out.printf("id : %d\t  부서 이름 : %s\t    이름 : %s\t   나이 : %s\t 전화번호 : %s\t   직급 : %s\n", vo.getId(), vo.getDepartmentName(),  vo.getName(), vo.getAge(), vo.getNumber(), vo.getEmployeeRank());
+			}
+	}
+	
+	//	지사별 목록
+	private static void searchRegions(Long keyRegions) {
+		EmploymentDao dao = new EmploymentImpl();
+		List<RegionsVo> list = dao.searchRegions(keyRegions);
+			Iterator<RegionsVo> iter = list.iterator();
+			while(iter.hasNext()) {
+				RegionsVo vo = iter.next();
+				System.out.printf("id : %d\t   지사 이름 : %s\t   이름 : %s\t  나이 : %s\t 전화번호 : %s\t    부서 이름 : %s\t 직급 : %s\n", 
+						vo.getId(), vo.getRegionsName(), vo.getName(), vo.getAge(), vo.getNumber(), vo.getDepartmentName(), vo.getEmployeeRank());
+			}
+	}
+	
+	//	직급별 목록 
+	public static void searchRank(int id) {
+		String a = "";
+	
+		switch(id) {
+		case 1 : {
+			a = "사원";
+			break;
+		}
+		case 2 : {
+			a = "대리";
+			break;
+		}
+		case 3 : {
+			a = "과장";
+			break;
+		}
+		case 4 : {
+			a = "차장";
+			break;
+		}
+		case 5 : {
+			a = "부장";
+			break;
+		}
+		default : {
+			System.out.print("error");
+		}
+		}
+		
+		EmploymentDao dao = new EmploymentImpl();
+		List<RankVo> list = dao.searchRank(a);
+			Iterator<RankVo> iter = list.iterator();
+			while(iter.hasNext()) {
+				RankVo vo = iter.next();
+				System.out.printf("id : %d\t  직급 : %s\t 이름 : %s\t  나이 : %s\t 전화번호 : %s\t   부서이름 : %s\t    연봉 : %d\n", 
+						vo.getId(), vo.getEmployeeRank(), vo.getName(), vo.getAge(), vo.getNumber(), vo.getDepartmentName(), vo.getSalary());
 			}
 	}
 }
