@@ -67,7 +67,27 @@ public class ContactApp {
 									deleteEmployment(back);
 									break;
 								} else if (back2 == 2) {
-									updateEmployment(back);
+									while (true) {
+									System.out.println("0. 뒤로가기");
+									System.out.print("1. 이름 변경\t");
+									System.out.println("2. 나이 변경");
+									System.out.print("3. 전화번호 변경\t");
+									System.out.println("4. 이메일 변경");
+									System.out.print("5. 주소 변경\t");
+									System.out.println("6. 부서 변경");
+									System.out.print("7. 직급 변경\t");
+									System.out.println("8. 연봉 변경");
+									System.out.print(">");
+									int col = scanner.nextInt();
+									if (col == 0) {
+										break;
+									} 
+									scanner.nextLine();
+									String data = scanner.nextLine();
+									if(col > 0 && col < 9){
+										employeeUpdate(col, data, back);
+									}
+									}
 								}
 							}
 							
@@ -185,14 +205,9 @@ public class ContactApp {
 									break;
 								}
 							}
-							
-							
-							
-							
 						} else {
 							System.out.println("잘못된 입력");
 						}
-
 					}
 					break;			
 				}
@@ -537,5 +552,15 @@ public class ContactApp {
 				System.out.printf("id : %d\t  직급 : %s\t 이름 : %s\t  나이 : %s\t 전화번호 : %s\t   부서이름 : %s\t    연봉 : %d\n", 
 						vo.getId(), vo.getEmployeeRank(), vo.getName(), vo.getAge(), vo.getNumber(), vo.getDepartmentName(), vo.getSalary());
 			}
+	}
+	
+	private static void employeeUpdate(int col, String value, Long id) {
+		EmploymentDao dao = new EmploymentImpl();
+		boolean flag = dao.updateCustom(col, value, id);
+		if(flag == true) {
+			System.out.println("성공");
+		} else {
+			System.out.println("실패");
+		}
 	}
 }
