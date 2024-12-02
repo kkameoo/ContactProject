@@ -67,8 +67,9 @@ public class CallRecordImpl implements CallRecordDao{
 	}
 	
 	@Override
-	public void call(Long num) {
+	public boolean call(Long num) {
 		
+		int count = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		LocalDateTime now = LocalDateTime.now();
@@ -82,7 +83,7 @@ public class CallRecordImpl implements CallRecordDao{
 			pstmt.setString(1, formatedNow);
 			pstmt.setLong(2, num);
 			
-			pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -92,6 +93,7 @@ public class CallRecordImpl implements CallRecordDao{
 				if(conn != null) conn.close();
 			} catch(Exception e) {}
 		}
+		return count == 1;
 	}
 	
 	@Override

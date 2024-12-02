@@ -6,7 +6,7 @@ import com.java.vo.CallRecordVo;
 
 public interface CallRecordDao {
 	public List<CallRecordVo> getList();
-	public void call(Long num);
+	public boolean call(Long num);
 	public void callDown();
 	
 }

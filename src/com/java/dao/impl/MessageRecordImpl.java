@@ -30,9 +30,10 @@ public class MessageRecordImpl implements MessageRecordDao{
 	}
 	
 	@Override
-	public void send(String message, Long id) {
+	public boolean send(String message, Long id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		int count = 0;
 		try {
 			conn = getConnection();
 			String sql = "INSERT INTO message_records (message_comment, read_check, employee_id) VALUES "
@@ -41,8 +42,9 @@ public class MessageRecordImpl implements MessageRecordDao{
 			
 			pstmt.setString(1, message);
 			pstmt.setLong(2, id);
-			pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
+			System.err.println("잘못된 입력입니다.");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -53,6 +55,7 @@ public class MessageRecordImpl implements MessageRecordDao{
 				e2.printStackTrace();
 			}
 		}
+		return count == 1;
 	}
 	
 	@Override
