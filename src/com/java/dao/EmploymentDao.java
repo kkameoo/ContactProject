@@ -22,5 +22,4 @@ public interface EmploymentDao {
 	public List<RegionsVo> searchRegions(Long keyRegions);//	지사별 목록
 	public List<RankVo> searchRank(String keyRank);	//	직급별 목록
 	public boolean updateCustom(int num, String value, Long id);	//	개별 업데이트
-	
 }

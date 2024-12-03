@@ -456,7 +456,6 @@ public class EmploymentImpl implements EmploymentDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, keyRegions);
 			rs = pstmt.executeQuery();
-
 			
 			while (rs.next()) {
 				Long id = rs.getLong(1);

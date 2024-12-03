@@ -32,10 +32,9 @@ public class ContactApp {
 			
 			System.out.println("-----연락처 프로그램-----");
 			System.out.println("번호를 선택하세요.");
-
 			System.out.println("0.종료 \n1.전체목록 \n2.검색 \n3.사원 정보 추가 "
 					+ "\n4.목록  \n5.통화\t 6.통화 기록 \n7.메세지 송신\t 8.메세지 기록 ");
-
+			
 			int num = scanner.nextInt();
 			
 			switch(num) {
@@ -273,7 +272,7 @@ public class ContactApp {
 				case 7 : {
 					while (true) {
 						searchEmploymentByNameVoid();
-						System.out.println("통화할 사원의 사원번호를 입력하세요.");
+						System.out.println("문자할 사원의 사원번호를 입력하세요.");
 						System.out.println("0.뒤로가기");
 						System.out.print(">");
 						Long back = scanner.nextLong(); 

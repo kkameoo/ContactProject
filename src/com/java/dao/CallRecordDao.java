@@ -8,5 +8,4 @@ public interface CallRecordDao {
 	public List<CallRecordVo> getList();
 	public boolean call(Long num);
 	public void callDown();
-	
 }
